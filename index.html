@@ -607,6 +607,24 @@ button:not(:disabled):hover,.btn:hover,.cta:hover,.ghost:hover,.fold>summary:hov
 .gcount{position:absolute;bottom:10px;right:12px;background:rgba(20,32,20,.68);color:#fff;font-size:13px;padding:3px 11px;border-radius:99px;pointer-events:none}
 .th2{position:relative}.th2 img{display:block}
 .imgn{position:absolute;top:10px;right:10px;background:rgba(20,32,20,.68);color:#fff;font-size:12.5px;padding:3px 10px;border-radius:99px}
+/* ===== short landscape screens (phones turned sideways): bigger, equal side cards ===== */
+@media (min-width:768px){
+html.short body.pub #pub,html.short body:not(.pub) main{max-width:640px;margin-top:14px;margin-bottom:14px}
+html.short body.pub #pside,html.short body.pub #lside,html.short body:not(.pub) nav,html.short body:not(.pub) #aside2{top:14px;width:290px}
+html.short body.pub #pside,html.short body:not(.pub) nav{left:calc(50% - 332px - 290px)}
+html.short body.pub #lside,html.short body:not(.pub) #aside2{left:calc(50% + 332px)}
+html.short body.pub .ov{width:640px;margin-left:-320px}
+html.short body.pub #pside,html.short body:not(.pub) nav{padding:16px 18px}
+html.short body.pub #pside .rname,html.short body:not(.pub) nav .nhead b{margin-top:8px}
+html.short body.pub #pside .rlinks{margin-top:10px;gap:2px}
+html.short body.pub #pside .rlinks a,html.short body:not(.pub) nav button{padding:10px 16px}
+html.short body.pub #pside .pbtn{margin-top:10px;padding-top:4px}
+html.short body:not(.pub) nav .nhead{margin-bottom:6px}
+html.short .scard{padding:16px 18px}
+html.short .scard h3{margin-bottom:8px}
+html.short .lst{padding:9px 14px}
+html.short .nt{padding:8px 0}
+}
 </style>
 </head>
 <body class="pub">
@@ -986,14 +1004,14 @@ $("mpf").onchange=function(){var f=this.files[0];if(!f)return;var r=new FileRead
 $("mtol").value=D.me.tol||38;
 $("mtol").onchange=function(){if(D.me.photo)applyPhoto(D.me.photo,+this.value)};
 $("mpr").onclick=function(){D.me.photo=null;D.me.cut=null;save();$("mpm").textContent="กลับเป็นรูปเริ่มต้นแล้ว";all()};
-var _lw=0,_vm=0,_zs=null,_vh=null,_mh=null,_rq=0;
+var _sh=null,_lw=0,_vm=0,_zs=null,_vh=null,_mh=null,_rq=0;
 function stableH(){var w=window.innerWidth,h=window.innerHeight;if(w!==_lw||Math.abs(h-_vm)>140){_lw=w;_vm=h}else if(h<_vm){_vm=h}return _vm}
 function fit(){var w=window.innerWidth,z=(w>=768&&w<1260)?w/1260:1,zs=z===1?"":String(z),rs=document.documentElement.style,vh=Math.round(stableH()/z)+"px";
- if(_vh!==vh){_vh=vh;rs.setProperty("--vh",vh)}if(_zs!==zs){_zs=zs;document.body.style.zoom=zs}if(rs.zoom)rs.zoom=""}
+ if(_vh!==vh){_vh=vh;rs.setProperty("--vh",vh)}if(_zs!==zs){_zs=zs;document.body.style.zoom=zs}if(rs.zoom)rs.zoom="";var sh=(_vm<=620&&w>=768);if(_sh!==sh){_sh=sh;document.documentElement.classList.toggle("short",sh)}}
 function fitMenu(){var rs=document.documentElement.style,vh=parseFloat(_vh)||window.innerHeight,pub=document.body.classList.contains("pub"),mk=1,mh=null;
  ["pside","nav"].forEach(function(id){var e=id==="nav"?document.querySelector("nav"):document.getElementById(id);if(!e||window.innerWidth<768)return;
   if(getComputedStyle(e).display==="none")return;
-  var h=e.offsetHeight,av=vh-56,k=h>av?Math.max(.7,av/h):1,t=k<1?"scale("+k.toFixed(3)+")":"";
+  var h=e.offsetHeight,av=vh-(document.documentElement.classList.contains("short")?28:56),k=h>av?Math.max(.7,av/h):1,t=k<1?"scale("+k.toFixed(3)+")":"";
   if(e._t!==t){e._t=t;e.style.transformOrigin="top center";e.style.transform=t}
   if(pub?id==="pside":id==="nav"){mk=k;mh=h}});
  ["lside","aside2"].forEach(function(id){var e=document.getElementById(id);if(!e)return;
